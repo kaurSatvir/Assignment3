@@ -1,26 +1,27 @@
 //first create array of images
 var images = {};
-images.array = ['ikOnkar', 'ikOnkar','kangha', 'kangha','kara', 'kara','khanda', 'khanda','kirpan', 'kirpan','dastar', 'dastar',
-'goldenTemple', 'goldenTemple','kataar', 'kataar','soldier', 'soldier'];
+images.array = ['ikOnkar', 'ikOnkar','kangha', 'kangha','kara', 'kara','khanda', 'khanda','kirpan', 'kirpan','dastar', 'dastar', 'goldenTemple', 'goldenTemple','kataar', 'kataar','soldier', 'soldier'];
 
 var numberOfMoves;
 var cardsmatched;
 
-var gameStart = $("#gameStart");
 var statusTab = $("#statusTab");
+var moves = $("#moves");
+var movesMade = $(".movesMade");
+var resetButton = $(".gameReset");
+
+var gameStart = $("#gameStart");
+var startButton = $("#start");
+
 var gameEnd = $("#gameEnd");
 var board= $("#board");
-var resetButton = $(".gameReset");
-var movesMade = $(".movesMade");
-var startButton = $("#start");
-var moves = $("#moves");
 
 $(function(){
-	  init();
+	  Init();
 });
 
 //Let's initialize the game
-function init() {
+function Init() {
     
     playGame = false;
 
@@ -57,8 +58,7 @@ function StartPlaying(){
     if (playGame == false) {
             
         playGame = true;
-            random = 0.5 - Math.random();
-            images.array.sort(shuffle);
+            images.array.sort(Shuffle);
             
             for(var i = 0; i < images.array.length - 1; i++){
                 $(".card:first-child").clone().appendTo("#board");
@@ -71,47 +71,46 @@ function StartPlaying(){
                 var faceValue = images.array.pop();
                 $(this).find(".back").addClass(faceValue);
                 $(this).attr("data-pattern",faceValue);
-                $(this).click(selectCard);
+                $(this).click(SelectCard);
             });											 
     }			   
   };
 
-function selectCard() {
+function SelectCard() {
     
 	if ($(".card-flipped").size() > 1) {
-	return;
+	   return;
 	}
 	
     $(this).addClass("card-flipped");
     movesMade.html(++numberOfMoves);
     
     if ($(".card-flipped").size() == 2) {
-        //movesMade.html(++numberOfMoves);
-        setTimeout(checkValue,700);
+        setTimeout(CheckValue,700);
 	}
 };
 
-function checkValue() {
-	if (matchValue()) {
+function CheckValue() {
+	if (MatchValue()) {
 		$(".card-flipped").removeClass("card-flipped").addClass("card-removed");
-			if(document.webkitTransitionEnd){
-				$(".card-removed").bind("webkitTransitionEnd",	hideCards);
-			}else{
-				hideCards();
-			}
+        if(document.webkitTransitionEnd){
+            $(".card-removed").bind("webkitTransitionEnd",	RemoveCards);
+        }else{
+            RemoveCards();
+        }
 		} else {
 		$(".card-flipped").removeClass("card-flipped");
 	}
 };
 
-function matchValue() {
+function MatchValue() {
 	var cards = $(".card-flipped");
 	var card1 = $(cards[0]).data("pattern");
 	var card2 = $(cards[1]).data("pattern");
 	return (card1 == card2);
 };
 
-function hideCards() {
+function RemoveCards() {
 	if (cardsmatched < 8){
 		cardsmatched++;
 		$(".card-removed").remove();
@@ -130,6 +129,6 @@ function RestartGame(){
     StartPlaying();
 };
 
-function shuffle() {
+function Shuffle() {
 	return 0.5 - Math.random();
 };
