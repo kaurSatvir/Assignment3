@@ -2,23 +2,30 @@
 <html lang=en>
     <meta charset='utf-8'>
     <title>Memory Game</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/game.css" />
     <script src="http://code.jquery.com/jquery-1.7.min.js"></script>
-    <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
-    <link rel="stylesheet" href="css/main.css">
     <body>
-        
-        <div class="memoryGame w3-container w3-card-12 w3-orange w3-center w3-margin-64">
-            <div id="startPage">
-            <p><a id="play" class = "w3-btn w3-white w3-border w3-border-yellow w3-round w3-myfont w3-xlarge" href="">PLAY</a></p>
-            </div>
-            <div id="endPage">
-                <p id="message" class = "w3-container w3-pale-yellow w3-topbar w3-bottombar w3-border-black w3-myfont w3-xxlarge">Hey! You completed the game in <span class="timeTaken"></span>.</p>
-                <p><a id="playAgain" class = "w3-btn w3-white w3-border w3-border-yellow w3-round w3-myfont w3-xlarge" href="">PLAY AGAIN</a></p>
-            </div>
-            <div id="cards" class="cards">
-            </div>
+     <div id="statusTab">
+        <p id="moves">MOVES: <span class="movesMade"></span></p>
+        <p id="reset"><a class="gameReset" href="">RESET</a></p>
+    </div>	
+    <div id="game">
+        <div id="gameStart">
+            <p><a id="start" class="button" href="">START</a></p>
         </div>
+
+        <div id="gameEnd">
+                <p id="top">You completed the game in <span class="movesMade"></span> moves.</p>
+                <p><a class="gameReset button" href="">PLAY AGAIN</a></p>
+        </div>
+
+        <div id="board">
+            <div class="card">
+                <div class="face front"></div>
+                <div class="face back"></div>
+            </div> 
+        </div>
+    </div>
         <script src="js/game.js"></script>
     </body>
 </html>
