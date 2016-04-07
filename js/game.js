@@ -4,7 +4,8 @@ images.array = ['ikOnkar', 'ikOnkar','kangha', 'kangha','kara', 'kara','khanda',
 
 var numberOfMoves;
 var cardsmatched;
-
+var faceValue;
+var flipped;
 var statusTab = $("#statusTab");
 var moves = $("#moves");
 var movesMade = $(".movesMade");
@@ -68,7 +69,7 @@ function StartPlaying(){
                 $(this).css({"left" : ($(this).width() + 20) * (index % 6),
                             "top" : ($(this).height() + 20) * Math.floor(index / 6)});
                 
-                var faceValue = images.array.pop();
+                faceValue = images.array.pop();
                 $(this).find(".back").addClass(faceValue);
                 $(this).attr("data-pattern",faceValue);
                 $(this).click(SelectCard);
@@ -82,7 +83,7 @@ function SelectCard() {
 	   return;
 	}
 	
-    $(this).addClass("card-flipped");
+    flipped = $(this).addClass("card-flipped");
     movesMade.html(++numberOfMoves);
     
     if ($(".card-flipped").size() == 2) {
@@ -93,11 +94,11 @@ function SelectCard() {
 function CheckValue() {
 	if (MatchValue()) {
 		$(".card-flipped").removeClass("card-flipped").addClass("card-removed");
-        if(document.webkitTransitionEnd){
-            $(".card-removed").bind("webkitTransitionEnd",	RemoveCards);
-        }else{
-            RemoveCards();
-        }
+			if(document.webkitTransitionEnd){
+				$(".card-removed").bind("webkitTransitionEnd",	RemoveCards);
+			}else{
+				RemoveCards();
+			}
 		} else {
 		$(".card-flipped").removeClass("card-flipped");
 	}
@@ -110,7 +111,7 @@ function MatchValue() {
 	return (card1 == card2);
 };
 
-function RemoveCards() {
+function RemoveCards(currentface) {
 	if (cardsmatched < 8){
 		cardsmatched++;
 		$(".card-removed").remove();
